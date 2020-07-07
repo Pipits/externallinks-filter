@@ -4,7 +4,8 @@
  * Perch template filter for adding target and rel attributes to external links
  * 
  * @package PipitTemplateFilter_externallinks
- * @version v1.1.0 
+ * @version v1.0.1 
+ * @link https://github.com/Pipits/externallinks-filter
  */
 class PipitTemplateFilter_externallinks extends PerchTemplateFilter {
     public $returns_markup = true;
