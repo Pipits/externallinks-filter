@@ -1,6 +1,11 @@
 <?php
 
-
+/**
+ * Perch template filter for adding target and rel attributes to external links
+ * 
+ * @package PipitTemplateFilter_externallinks
+ * @version v1.1.0 
+ */
 class PipitTemplateFilter_externallinks extends PerchTemplateFilter {
     public $returns_markup = true;
 
@@ -16,7 +21,7 @@ class PipitTemplateFilter_externallinks extends PerchTemplateFilter {
 
         $doc = new DOMDocument('1.0', 'UTF-8');
         libxml_use_internal_errors(true);
-        $doc->loadHTML(mb_convert_encoding($value, 'HTML-ENTITIES', 'UTF-8'));
+        $doc->loadHTML(mb_convert_encoding($value, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         $xpath = new DOMXPath($doc);
 
         $result = $xpath->query('//a');
