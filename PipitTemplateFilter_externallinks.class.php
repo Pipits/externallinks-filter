@@ -20,9 +20,13 @@ class PipitTemplateFilter_externallinks extends PerchTemplateFilter {
         }
 
 
+        // DOMDocument->loadHTML() automatically adds html/body tags.
+        // Using the LIBXML_HTML_NOIMPLIED has a negative impact
+        $value = '<html data-remove><body data-remove>' . $value . '</html></body>';
+
         $doc = new DOMDocument('1.0', 'UTF-8');
         libxml_use_internal_errors(true);
-        $doc->loadHTML(mb_convert_encoding($value, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $doc->loadHTML(mb_convert_encoding($value, 'HTML-ENTITIES', 'UTF-8'));
         $xpath = new DOMXPath($doc);
 
         $result = $xpath->query('//a');
@@ -50,6 +54,7 @@ class PipitTemplateFilter_externallinks extends PerchTemplateFilter {
 
 
         $output = $doc->saveHTML($doc->documentElement);
+        $output = str_replace(['<html data-remove><body data-remove>', '</body></html>'], '', $output);
         return $output;
     }
 
